@@ -1,8 +1,8 @@
 package com.gennadykulikov.chess;
 
 public class Knight extends Piece{
-    public Knight(String name, boolean isCaptured, boolean isWhite, byte row, byte column) {
-        super(name, isCaptured, isWhite, row, column);
+    public Knight(String name, boolean isWhite, byte row, byte column) {
+        super(name, isWhite, row, column);
     }
 
     @Override

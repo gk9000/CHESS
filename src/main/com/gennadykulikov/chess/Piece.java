@@ -5,18 +5,17 @@ import static com.gennadykulikov.chess.Conversion.convertRow;
 
 public abstract class Piece {
     String name;
-    boolean isCaptured;
     boolean isWhite;
     byte row;
     byte column;
 
-    public Piece(String name, boolean isCaptured, boolean isWhite, byte row, byte column) {
+    public Piece(String name, boolean isWhite, byte row, byte column) {
         this.name = name;
-        this.isCaptured = isCaptured;
         this.isWhite = isWhite;
         this.row = row;
         this.column = column;
         Board.board[this.row][this.column] = this;
+        Board.activePieces.add(this);
     }
 
     void move(String destinationField) {
@@ -36,7 +35,7 @@ public abstract class Piece {
 
             // if this. is a pawn, switching to pawn-unique logics and after that breaking execution of current method
             if (this.getClass().equals(Pawn.class)){
-                calculateMovement(destinationRow,destinationColumn);
+                Pawn.calculatePawnMovement((Pawn)this, destinationRow,destinationColumn);
                 return;
             }
 
@@ -46,10 +45,7 @@ public abstract class Piece {
             boolean okMovement = (calculateMovement(destinationRow, destinationColumn));
 
             if (okMovement && okDestinationFieldAvailable) {
-                if (Board.board[destinationRow][destinationColumn] != null) {
-                    capturePiece(destinationRow, destinationColumn);
-                }
-                performMove(destinationRow,destinationColumn,this.row,this.column);
+                Move.performMove(this,destinationRow,destinationColumn);
             } else {
                 System.out.println("Illegal move");
             }
@@ -58,18 +54,8 @@ public abstract class Piece {
 
     abstract boolean calculateMovement(byte destinationRow, byte destinationColumn);
 
-    public void performMove(byte destinationRow, byte destinationColumn, byte thisRow, byte thisColumn){
-        Board.board[destinationRow][destinationColumn] = this;
-        Board.board[thisRow][thisColumn] = null;
-        this.row = destinationRow;
-        this.column = destinationColumn;
-    }
+    ////                    REMEMBER TO UPDATE SAME IN PAWN CLASS AND DO VERIFICATION OF ENEMY KING (ALSO IN PAWN)
 
-    public void capturePiece(byte row, byte column){
-        Board.board[row][column].isCaptured = true;
-        Board.takenPieces[Board.takenPiecesCounter] = Board.board[row][column];
-        Board.takenPiecesCounter++;
-    }
 
     public boolean verifyThatDestinationFieldIsAvailable(byte destinationRow,byte destinationColumn){
         if ((Board.board[destinationRow][destinationColumn] == null) ||
@@ -79,62 +65,9 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean verifyNotJumpingOverMovingAside(byte destinationColumn){
-        for(int i = this.column+1; i < destinationColumn; i++ ) {
-            if(Board.board[this.row][i] != null){
-                return false;
-            }
-        }
-        for(int i = this.column-1; i > destinationColumn; i-- ) {
-            if(Board.board[this.row][i] != null){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean verifyNotJumpingOverMovingForvardOrBack(byte destinationRow){
-        for(int i = this.row+1; i < destinationRow; i++ ) {
-            if(Board.board[i][this.column] != null){
-                return false;
-            }
-        }
-        for(int i = this.row-1; i > destinationRow; i-- ) {
-            if(Board.board[i][this.column] != null){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean verifyNotJumpingOverMovingAcross(byte destinationRow, byte destinationColumn){
-        for(int a=this.row+1, b=this.column+1; a<destinationRow && b<destinationColumn; a++,b++ ) {
-            if(Board.board[a][b] != null){
-                return false;
-            }
-        }
-        for(int a=this.row+1, b=this.column-1; a<destinationRow && b>destinationColumn; a++,b-- ) {
-            if(Board.board[a][b] != null){
-                return false;
-            }
-        }
-        for(int a=this.row-1, b=this.column+1; a>destinationRow && b<destinationColumn; a--,b++ ) {
-            if(Board.board[a][b] != null){
-                return false;
-            }
-        }
-        for(int a=this.row-1, b=this.column-1; a>destinationRow && b>destinationColumn; a--,b-- ) {
-            if(Board.board[a][b] != null){
-                return false;
-            }
-        }
-        return true;
-    }
-
     @Override
     public String toString() {
         return name + " (" +
-                "isTaken=" + isCaptured +
                 ", isWhite=" + isWhite +
                 ", row=" + row +
                 ", column=" + column +
