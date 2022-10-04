@@ -3,7 +3,7 @@ package com.gennadykulikov.chess;
 import java.util.Optional;
 
 /*
-*  The methods receive description of a field (for example, a3 or g6) and returns
+*  The method receives description of a field (for example, a3 or g6) and returns
 * byte (from 0 to 7 inclusive) that corresponds to the index of that row or column
 */
 public class Conversion {
