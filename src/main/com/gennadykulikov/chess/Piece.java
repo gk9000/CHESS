@@ -54,8 +54,6 @@ public abstract class Piece {
 
     abstract boolean calculateMovement(byte destinationRow, byte destinationColumn);
 
-    ////                    REMEMBER TO UPDATE SAME IN PAWN CLASS AND DO VERIFICATION OF ENEMY KING (ALSO IN PAWN)
-
 
     public boolean verifyThatDestinationFieldIsAvailable(byte destinationRow,byte destinationColumn){
         if ((Board.board[destinationRow][destinationColumn] == null) ||
