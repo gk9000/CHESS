@@ -18,7 +18,8 @@ The program doesn't know how to perform castling, doesn't promote a pawn that ha
 doesn't allow for capturing enemy pawns en passant.<br>
 Also it doesn't declare a checkmate situation as this is left to the players themselves.<br><br>
 
-Moves are made in the main method of Test class, for example:<br>
+The game is run in the main method of Test class. First, set up the board: Board.getBoard();  <br>
+After that, start moving pieces, for example:<br>
 Board.blackPawn06.move("f6");<br>
 (this command attempts to move the piece with the name "blackPawn06" from it's current position to field f6). <br>
 The whole list of pieces with their names can be found in the Board class.<br>
