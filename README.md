@@ -6,7 +6,7 @@ Here is what the program can do:
 at the very first move, different ways of moving and capturing, ban on moving backwards)
 - it makes sure that pieces don't jump over other pieces (this doesn't apply to knights, of course)
 - it blocks the move if destination field is occupied by a piece of the same colour
-- it blocks the move if leads to capturing a king
+- it blocks the move if it leads to capturing a king
 - if the move leads to capture of enemy piece, such capture is performed and the captured piece is removed from the board
 - if, as a result of the move, enemy king gets in check, a warning is issued
 - if, as a result of your move, your own king gets in check, this move is cancelled
