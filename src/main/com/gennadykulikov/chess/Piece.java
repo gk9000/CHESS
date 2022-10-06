@@ -66,7 +66,7 @@ public abstract class Piece {
     @Override
     public String toString() {
         return name + " (" +
-                ", isWhite=" + isWhite +
+                "isWhite=" + isWhite +
                 ", row=" + row +
                 ", column=" + column +
                 ')';
