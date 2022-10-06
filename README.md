@@ -6,6 +6,7 @@ Here is what the program can do:
 at the very first move, different ways of moving and capturing, ban on moving backwards)
 - it makes sure that pieces don't jump over other pieces (this doesn't apply to knights, of course)
 - it blocks the move if destination field is occupied by a piece of the same colour
+- it blocks the move if leads to capturing a king
 - if the move leads to capture of enemy piece, such capture is performed and the captured piece is removed from the board
 - if, as a result of the move, enemy king gets in check, a warning is issued
 - if, as a result of your move, your own king gets in check, this move is cancelled
@@ -15,7 +16,7 @@ cancels it immediately).<br><br>
 
 The program doesn't know how to perform castling, doesn't promote a pawn that has reached the last rank into another piece, and 
 doesn't allow for capturing enemy pawns en passant.<br>
-Also it doesn't declare a checkmate situation (and doesn't specifically block possibility of capturing a king) as this is left to the players themselves.<br><br>
+Also it doesn't declare a checkmate situation as this is left to the players themselves.<br><br>
 
 Moves are mage in the main method of Test class, for example:<br>
 Board.blackPawn06.move("f6");<br>
